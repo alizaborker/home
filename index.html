@@ -1,13 +1,128 @@
-<!DOCTYPE html> 
-  <html> 
-    <head> 
-      <title>My First Web Page</title> 
-    </head> 
-    <body> 
-      <h1>Welcome to Aliza Borker's Page!</h1> 
-      <p>
-        This is a simple page created for my book on AI.
-        Book is available - <a href="https://docs.google.com/document/d/17GDCFvvQJRi78PyQQAgKy3FO44xagVexfjPUxNc3Zvo/edit?usp=sharing_eil&invite=CKCqwOsE&ts=678eece5">here</a>
-      </p> 
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Podcast Web Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+        header img {
+            height: 50px;
+            margin-right: 20px;
+        }
+        header h1 {
+            margin: 0;
+        }
+        main {
+            padding: 20px;
+        }
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        .podcast-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .podcast-list li {
+            margin: 10px 0;
+        }
+        .comment-section textarea {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .comment-section button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .comment-section button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="Coachable_AI_Logo.jpg" alt="Logo" />
+        <h1>My Podcast Page</h1>
+    </header>
+    <main>
+        <!-- Section 1: Free Formatted Content -->
+        <section>
+            <h2>Welcome!</h2>
+            <p>Welcome to my "AI Book" page. Here you’ll find links to my <a href="https://docs.google.com/document/d/17GDCFvvQJRi78PyQQAgKy3FO44xagVexfjPUxNc3Zvo/edit?usp=sharing_eil&invite=CKCqwOsE&ts=678eece5">book</a> and latest podcast episodes and a place to share your thoughts.</p>
+        </section>
+
+        <!-- Section 2: Podcast Links -->
+        <section class="podcast-list">
+            <h2>Podcast Links</h2>
+            <ul>
+                <li><strong>Day 1:</strong> <a href="#">Topic: Introduction to AI</a></li>
+                <li><strong>Day 2:</strong> <a href="#">Topic: AI in Healthcare</a></li>
+                <li><strong>Day 3:</strong> <a href="#">Topic: AI in Digital Marketing</a></li>
+            </ul>
+        </section>
+
+        <!-- Section 3: User Comments -->
+        <section class="comment-section">
+            <h2>Leave a Comment</h2>
+            <textarea id="commentInput" placeholder="Write your comment here..."></textarea>
+            <button onclick="submitComment()">Submit Comment</button>
+            <p id="statusMessage"></p>
+        </section>
+    </main>
+
+    <script>
+        async function submitComment() {
+            const comment = document.getElementById('commentInput').value.trim();
+            const statusMessage = document.getElementById('statusMessage');
+
+            if (!comment) {
+                statusMessage.textContent = "Please enter a comment.";
+                statusMessage.style.color = "red";
+                return;
+            }
+
+            // Simulate storing the comment in a GitHub repo
+            try {
+                // Here you would implement an actual GitHub API integration.
+                // This example just simulates the process.
+                console.log("Saving comment:", comment);
+                statusMessage.textContent = "Comment submitted successfully!";
+                statusMessage.style.color = "green";
+                document.getElementById('commentInput').value = ""; // Clear the textarea
+            } catch (error) {
+                statusMessage.textContent = "Failed to submit the comment. Please try again.";
+                statusMessage.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
 
