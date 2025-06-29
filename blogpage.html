@@ -58,6 +58,7 @@
     </div>
 </div>
 
+<!-- FORM SUBMISSION TO LOCAL SERVER
 <script>
     // Function to render comments
     function renderComments(comments) {
@@ -97,9 +98,10 @@
         renderComments(comments);
     });
 </script>
+-->
 
-/* FORM SUBMISSION TO SERVER SIDE
 <script>
+// FORM SUBMISSION TO SERVER SIDE
     // Function to render comments
     function renderComments(comments) {
         const commentsContainer = document.getElementById('comments');
@@ -127,14 +129,19 @@
             })
             .then(response => {
                 if (response.ok) {
+                    //alert ('Server stored comment successfully');
+                    loadComments();
+                    // Clear form fields
+                    document.getElementById('username').value = '';
+                    document.getElementById('comment').value = '';
+                
                     return response.json();
                 }
                 throw new Error('Network response was not ok.');
             })
             .then(() => {
-                loadComments();
-                document.getElementById('username').value = '';
-                document.getElementById('comment').value = '';
+                //loadComments();
+
             })
             .catch(error => {
                 console.error('There was a problem with your fetch operation:', error);
@@ -155,7 +162,6 @@
     // Load comments on page load
     document.addEventListener('DOMContentLoaded', loadComments);
 </script>
-*/
 
 </body>
 </html>

@@ -108,36 +108,89 @@
         <!-- Section 4: User Comments -->
         <section class="comment-section">
             <h2>Leave a Comment</h2>
+            <input type="text" id="username" placeholder="Your Name" required>
             <textarea id="commentInput" placeholder="Write your comment here..."></textarea>
             <button onclick="submitComment()">Submit Comment</button>
             <p id="statusMessage"></p>
+
+            <div id="comments" class="comments">
+                <!-- Comments will be rendered here -->
+            </div>
         </section>
     </main>
 
     <script>
-        async function submitComment() {
-            const comment = document.getElementById('commentInput').value.trim();
-            const statusMessage = document.getElementById('statusMessage');
 
-            if (!comment) {
-                statusMessage.textContent = "Please enter a comment.";
-                statusMessage.style.color = "red";
+
+            // Server side processing
+            // Function to render comments
+            function renderComments(comments) {
+                const commentsContainer = document.getElementById('comments');
+                commentsContainer.innerHTML = '';
+                comments.forEach(comment => {
+                    const commentElement = document.createElement('div');
+                    commentElement.className = 'comment';
+                    commentElement.innerHTML = `<strong>${comment.username}</strong><p>${comment.text}</p>`;
+                    commentsContainer.appendChild(commentElement);
+                });
+            }
+
+            // Function to submit a comment
+            function submitComment() {
+                const username = document.getElementById('username').value;
+                const comment = document.getElementById('commentInput').value;
+        
+                if (username && comment) {
+                    fetch('/comments', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username, text: comment })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            //alert ('Server stored comment successfully');
+                            loadComments();
+                            <!--
+                            // Clear form fields
+                            document.getElementById('username').value = '';
+                            document.getElementById('commentInput').value = '';
+                            --> 
+                            statusMessage.textContent = "Comment submitted successfully!";
+                            statusMessage.style.color = "green";
+                            document.getElementById('commentInput').value = ""; // Clear the textarea
+
+                            return response.json();
+                        }
+                        throw new Error('Network response was not ok.');
+                    })
+                    .then(() => {
+                        //loadComments();
+        
+            })
+                    .catch(error => {
+                        console.error('There was a problem with your fetch operation:', error);
+                    });
+                } else {
+                    //alert('Please fill out both fields.');
+                    statusMessage.textContent = "Please enter a comment.";
+                    statusMessage.style.color = "red";
                 return;
+                }
             }
+        
+            // Function to load comments from the server
+            function loadComments() {
+                fetch('/comments')
+                    .then(response => response.json())
+                    .then(comments => renderComments(comments))
+                    .catch(error => console.error('Error loading comments:', error));
+            }
+        
+            // Load comments on page load
+            document.addEventListener('DOMContentLoaded', loadComments);
 
-            // Simulate storing the comment in a GitHub repo
-            try {
-                // Here you would implement an actual GitHub API integration.
-                // This example just simulates the process.
-                console.log("Saving comment:", comment);
-                statusMessage.textContent = "Comment submitted successfully!";
-                statusMessage.style.color = "green";
-                document.getElementById('commentInput').value = ""; // Clear the textarea
-            } catch (error) {
-                statusMessage.textContent = "Failed to submit the comment. Please try again.";
-                statusMessage.style.color = "red";
-            }
-        }
     </script>
 </body>
 </html>
