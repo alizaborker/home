@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Section</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .blog-section {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .comment-form {
+            margin-top: 20px;
+        }
+        .comment-form input, .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .comment-form button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .comments {
+            margin-top: 20px;
+        }
+        .comment {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="blog-section">
+    <h2>Blog Section</h2>
+    <div id="comments" class="comments">
+        <!-- Comments will be rendered here -->
+    </div>
+
+    <div class="comment-form">
+        <h3>Leave a Comment</h3>
+        <input type="text" id="username" placeholder="Your Name" required>
+        <textarea id="comment" placeholder="Your Comment" required></textarea>
+        <button onclick="submitComment()">Submit</button>
+    </div>
+</div>
+
+<script>
+    // Function to render comments
+    function renderComments(comments) {
+        const commentsContainer = document.getElementById('comments');
+        commentsContainer.innerHTML = '';
+        comments.forEach(comment => {
+            const commentElement = document.createElement('div');
+            commentElement.className = 'comment';
+            commentElement.innerHTML = `<strong>${comment.username}</strong><p>${comment.text}</p>`;
+            commentsContainer.appendChild(commentElement);
+        });
+    }
+
+    // Function to submit a comment
+    function submitComment() {
+        const username = document.getElementById('username').value;
+        const comment = document.getElementById('comment').value;
+
+        if (username && comment) {
+            // Simulate saving to server and reloading comments
+            const comments = JSON.parse(localStorage.getItem('comments') || '[]');
+            comments.push({ username, text: comment });
+            localStorage.setItem('comments', JSON.stringify(comments));
+            renderComments(comments);
+
+            // Clear form fields
+            document.getElementById('username').value = '';
+            document.getElementById('comment').value = '';
+        } else {
+            alert('Please fill out both fields.');
+        }
+    }
+
+    // Load comments on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const comments = JSON.parse(localStorage.getItem('comments') || '[]');
+        renderComments(comments);
+    });
+</script>
+
+</body>
+</html>
