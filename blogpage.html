@@ -98,5 +98,64 @@
     });
 </script>
 
+/* FORM SUBMISSION TO SERVER SIDE
+<script>
+    // Function to render comments
+    function renderComments(comments) {
+        const commentsContainer = document.getElementById('comments');
+        commentsContainer.innerHTML = '';
+        comments.forEach(comment => {
+            const commentElement = document.createElement('div');
+            commentElement.className = 'comment';
+            commentElement.innerHTML = `<strong>${comment.username}</strong><p>${comment.text}</p>`;
+            commentsContainer.appendChild(commentElement);
+        });
+    }
+
+    // Function to submit a comment
+    function submitComment() {
+        const username = document.getElementById('username').value;
+        const comment = document.getElementById('comment').value;
+
+        if (username && comment) {
+            fetch('/comments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, text: comment })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(() => {
+                loadComments();
+                document.getElementById('username').value = '';
+                document.getElementById('comment').value = '';
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+            });
+        } else {
+            alert('Please fill out both fields.');
+        }
+    }
+
+    // Function to load comments from the server
+    function loadComments() {
+        fetch('/comments')
+            .then(response => response.json())
+            .then(comments => renderComments(comments))
+            .catch(error => console.error('Error loading comments:', error));
+    }
+
+    // Load comments on page load
+    document.addEventListener('DOMContentLoaded', loadComments);
+</script>
+*/
+
 </body>
 </html>
